@@ -1,5 +1,5 @@
 #include <genesis.h>
-#include "resources.h"
+// #include "resources.h"
 #include "types.h"
 #include "pal_test.h"
 #include "main_menu.h"
