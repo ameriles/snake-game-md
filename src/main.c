@@ -1,5 +1,5 @@
 #include <genesis.h>
-// #include "resources.h"
+#include "resources.h"
 #include "types.h"
 #include "pal_test.h"
 #include "main_menu.h"
@@ -35,6 +35,9 @@ int main(bool resetType) {
 
   // Initialize joypad and sprite engine in order to use them
 	JOY_init();
+
+	// Initialize SPR engine
+	SPR_init();
 
 	enum Screen nextScreen = screen;
 	mainMenu_start();
