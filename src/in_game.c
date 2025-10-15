@@ -118,10 +118,6 @@ static void updateSpeed() {
 }
 
 static void updateSnake() {
-  // if (_state.timerTicks % 25 != 0) {
-  //  return;
-  // }
-
   updateSpeed();
 
   updateDirections();
@@ -255,13 +251,13 @@ static void displayInfo() {
   sprintf(buffer, "SPD: %d", _state.snake.speed);
   VDP_drawText(buffer, SCREEN_TILE_WIDTH - 8, 2);
 
-  sprintf(buffer, "S: %03d,%03d", _state.snake.segments[0].x, _state.snake.segments[0].y);
-  VDP_drawText(buffer, SCREEN_TILE_WIDTH - 10, 3);
+  sprintf(buffer, "SC: %03d,%03d", _state.snake.segments[0].x, _state.snake.segments[0].y);
+  VDP_drawText(buffer, SCREEN_TILE_WIDTH - 11, 3);
 
-  sprintf(buffer, "F: %03d,%03d", _state.food.x, _state.food.y);
-  VDP_drawText(buffer, SCREEN_TILE_WIDTH - 10, 4);
+  sprintf(buffer, "FC: %03d,%03d", _state.food.x, _state.food.y);
+  VDP_drawText(buffer, SCREEN_TILE_WIDTH - 11, 4);
   
-  sprintf(buffer, "FOOD: %d", _state.foodLeft);
+  sprintf(buffer, "FOOD: %02d", _state.foodLeft);
   VDP_drawText(buffer, SCREEN_TILE_WIDTH - 8, 5);
 }
 
@@ -280,8 +276,6 @@ void inGame_start() {
   SnakeSegment* segment = &_state.snake.segments[0];
   segment->x = SCREEN_WIDTH / 2;   // half of the screen width
   segment->y = SCREEN_HEIGHT / 2;  // half of the screen height
-  segment->bx = MAX_U16;
-  segment->by = MAX_U16;
   segment->direction = RIGHT;
   segment->sprite = SPR_addSprite(&snakeSegment, segment->x, segment->y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
 
@@ -314,8 +308,6 @@ enum Screen inGame_update() {
   _state.timerTicks++;
 
   displayInfo();
-  // VDP_drawText("HERE IT'S THE GAME", 10, 0);
-  // VDP_drawText("Press C to exit", 10, 1);
 
   checkCollisions();
 
