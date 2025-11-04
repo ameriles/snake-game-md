@@ -1,1 +1,1 @@
-SPRITE snakeSegment "./assets/snake_segment.png" 1 1 NONE
+SPRITE sprSnakeSegment "./assets/snake_segment.png" 1 1 NONE
