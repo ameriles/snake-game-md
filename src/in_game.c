@@ -1,13 +1,8 @@
 #include "in_game.h"
-#include "snake.h"
 #include "types.h"
+#include "snake.h"
+#include "food.h"
 #include "resources.h"
-
-typedef struct {
-  u16 x;
-  u16 y;
-  Sprite *sprite;
-} Food;
 
 // --- private state shape
 typedef struct {
@@ -42,14 +37,6 @@ static void increaseGameSpeed() {
       _state.reqSpeed = 8;  // cap the speed at 8
       break;
   }
-}
-
-static void renderFood() {
-  if (_state.foodLeft == 0) {
-    return; // no food to render
-  }
-
-  SPR_setPosition(_state.food.sprite, _state.food.x, _state.food.y);
 }
 
 static void checkCollisions() {
@@ -129,7 +116,6 @@ static void displayInfo() {
 
 // --- public functions
 void inGame_start() {
-  // Initialize variables
   _state.gameOver = FALSE;
   _state.timerTicks = 0;
 
@@ -138,13 +124,8 @@ void inGame_start() {
   _state.foodLeft = 16;
 
   snake_init(&_state.snake);
+  food_init(&_state.food);
 
-  // TODO: for now using snakeSegment as food sprite, but we should use a different sprite for food
-  Food* food = &_state.food;
-  food->x = (random() % (SCREEN_TILE_WIDTH - 1)) * SEGMENT_SIZE;
-  food->y = (random() % (SCREEN_TILE_HEIGHT - 1)) * SEGMENT_SIZE;
-  food->sprite = SPR_addSprite(&sprSnakeSegment, food->x, food->y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
-  
   loadPalettes();
 
   // Setup a callback when a button is pressed, we could call it a "pseudo parallel" joypad handler
@@ -153,6 +134,7 @@ void inGame_start() {
 
 void inGame_cleanUp() {
   snake_cleanUp(&_state.snake);
+  food_cleanUp(&_state.food);
 
   SPR_reset();
   PAL_setPalette(PAL1, NULL, CPU);
@@ -166,7 +148,9 @@ enum Screen inGame_update() {
 
   checkCollisions();
 
-  renderFood();
+  if (_state.foodLeft > 0) {
+    food_render(&_state.food);
+  }
   
   snake_updateSpeed(&_state.snake, _state.reqSpeed);
   snake_updateDirection(&_state.snake, _state.reqDirection);
