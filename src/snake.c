@@ -4,15 +4,19 @@
 
 // --- public functions
 
-void snake_init(Snake* snake) {
+void snake_init(Snake* snake, u8 initialSegments, u8 initialSpeed) {
   snake->length = 1;
-  snake->speed = 1;
+  snake->speed = initialSpeed;
 
   SnakeSegment* segment = &snake->segments[0];
   segment->x = SCREEN_WIDTH / 2;   // half of the screen width
   segment->y = SCREEN_HEIGHT / 2;  // half of the screen height
   segment->direction = RIGHT;
   segment->sprite = SPR_addSprite(&sprSnakeSegment, segment->x, segment->y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+
+  for (int i = 1; i < initialSegments; i++) {
+    snake_grow(snake);
+  }
 }
 
 void snake_updateSpeed(Snake* snake, u8 reqSpeed) {

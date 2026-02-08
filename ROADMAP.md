@@ -1,5 +1,5 @@
 ## Features to implement
-- Add Levels
+- Add Levels -> PARTIALLY IMPLEMENTED
 - Add Lives
 - Food types
 - Add sound effects
@@ -7,9 +7,9 @@
 
 ### Add Levels
 Every level should have have this properties:
-- Initial speed
-- Initial segments
-- Food count
+- Initial speed -> IMPLEMENTED
+- Initial segments -> IMPLEMENTED
+- Food count -> IMPLEMENTED
 - Obstacles
 
 The level starts with the initial speed and initial segments.

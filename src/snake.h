@@ -29,7 +29,7 @@ typedef struct {
   u8 speed;
 } Snake;
 
-void snake_init(Snake* snake);
+void snake_init(Snake* snake, u8 initialSegments, u8 initialSpeed);
 void snake_updateSpeed(Snake* snake, u8 reqSpeed);
 void snake_updateDirection(Snake* snake, enum SnakeDirection reqDirection);
 void snake_move(Snake* snake);
