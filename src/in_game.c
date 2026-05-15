@@ -33,6 +33,7 @@ static InGameState _state;
 
 static void loadPalettes() {
   PAL_setPalette(PAL1, sprSnakeSegment.palette->data, CPU);
+  food_updatePalette(&_state.food);
 }
 
 static void increaseGameSpeed() {
@@ -196,6 +197,7 @@ void inGame_cleanUp() {
 
   SPR_reset();
   PAL_setPalette(PAL1, NULL, CPU);
+  PAL_setPalette(PAL2, NULL, CPU);
   JOY_setEventHandler(NULL);
 }
 
@@ -215,6 +217,10 @@ enum Screen inGame_update() {
   if (_state.status == PLAYING) {
     if (_state.timerTicks % (60 * 5) == 0) { // decrease bonus every 5 seconds
       level_decreaseBonus(&_state.level, _state.snake.speed); // decrease bonus based on the current speed
+    }
+
+    if (_state.timerTicks % (60 / 2) == 0) { // swap pallete every half second
+      food_updatePalette(&_state.food);
     }
 
     snake_updateSpeed(&_state.snake, _state.reqSpeed);
